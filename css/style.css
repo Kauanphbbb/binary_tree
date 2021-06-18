@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #CCC;
+    font-size: 22px;
+}
+
+.new-node {
+    display: flex;
+    flex-direction: column;
+}
+
+.mermaid {
+    display: none;
+}
+
+.btn-insert,
+.input-node {
+    width: 250px;
+    border-radius: 5px;
+}
+
+.btn-insert {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-insert:hover {
+    background-color: #006f94;
+}
+
+.input-node {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.msg-invalid-input {
+    color: red;
+    display: none;
+}

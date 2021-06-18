@@ -9,9 +9,11 @@ class Node {
 class BinaryTree {
   constructor(root = null) {
     this.root = root;
+    this.string = "";
   }
 
   insert(value) {
+    // numero negativo está inserindo no nó direito
     const newNode = new Node(value);
 
     if (this.root === null) {
@@ -28,20 +30,41 @@ class BinaryTree {
       } else {
         this.insertNode(node.left, newNode);
       }
-    } else if (node.value < newNode.value) {
+
+      return;
+    }
+
+    if (node.value < newNode.value) {
       if (node.right === null) {
         node.right = newNode;
       } else {
         this.insertNode(node.right, newNode);
       }
+
+      return;
+    }
+  }
+
+  show() {
+    this.string = "";
+
+    if (!this.root.left && !this.root.right) {
+      return `${this.root.value};`;
+    }
+
+    this.showNode(this.root);
+    return this.string;
+  }
+
+  showNode(node) {
+    if (node.left) {
+      this.string = `${this.string} ${node.value} --> ${node.left.value};`;
+      this.showNode(node.left);
+    }
+
+    if (node.right) {
+      this.string = `${this.string} ${node.value} --> ${node.right.value};`;
+      this.showNode(node.right);
     }
   }
 }
-
-const tree = new BinaryTree();
-
-tree.insert(1);
-tree.insert(2);
-tree.insert(3);
-
-console.log(tree);

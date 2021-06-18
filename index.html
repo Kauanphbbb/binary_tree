@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Binary Search Tree</title>
+</head>
+
+<body>
+    <div class="mermaid">
+        graph TD;30 --> 15;15 --> 10;15 --> 25;30 --> 50;50 --> 31;
+    </div>
+
+    <div class="new-node">
+        <label for="value">Insert a node</label>
+        <input type="text" id="input-node" class="input-node">
+        <button id="btn-insert" class="btn-insert">Insert</button>
+        <span class="msg-invalid-input">Invalid Input</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0-rc.8/mermaid.min.js"></script>
+    <script src="./js/BinaryTree.js"></script>
+    <script src="./js/script.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+</body>
+
+</html>
