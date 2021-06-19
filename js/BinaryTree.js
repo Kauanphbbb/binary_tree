@@ -9,18 +9,27 @@ class Node {
 class BinaryTree {
   constructor(root = null) {
     this.root = root;
+    this.quantityNodes = 0;
+    this.degree = 0;
+    this.height = 0;
     this.string = "";
   }
 
   insert(value) {
-    // numero negativo está inserindo no nó direito
     const newNode = new Node(value);
 
     if (this.root === null) {
       this.root = newNode;
-    } else {
-      this.insertNode(this.root, newNode);
+      this.quantityNodes++;
     }
+
+    if (!this.getNode(value)) {
+      this.insertNode(this.root, newNode);
+      this.quantityNodes++;
+    }
+
+    this.setDegree();
+    this.height = this.getHeight(this.root);
   }
 
   insertNode(node, newNode) {
@@ -45,26 +54,50 @@ class BinaryTree {
     }
   }
 
-  show() {
-    this.string = "";
+  getHeight(node) {
+    if (node === null) {
+      return -1;
+    } else {
+      let heightLeft = this.getHeight(node.left);
+      let heightRight = this.getHeight(node.right);
 
-    if (!this.root.left && !this.root.right) {
-      return `${this.root.value};`;
+      if (heightLeft < heightRight) {
+        return heightRight + 1;
+      } else {
+        return heightLeft + 1;
+      }
     }
-
-    this.showNode(this.root);
-    return this.string;
   }
 
-  showNode(node) {
-    if (node.left) {
-      this.string = `${this.string} ${node.value} --> ${node.left.value};`;
-      this.showNode(node.left);
+  setDegree() {
+    this.degree = 0;
+
+    if (this.root.left) {
+      this.degree++;
+    }
+    if (this.root.right) {
+      this.degree++;
+    }
+  }
+
+  getDegree() {
+    this.setDegree();
+    return this.degree();
+  }
+
+  getNode(value, node = this.root) {
+    if (node === null) {
+      return null;
     }
 
-    if (node.right) {
-      this.string = `${this.string} ${node.value} --> ${node.right.value};`;
-      this.showNode(node.right);
+    if (value === node.value) {
+      return node;
+    }
+
+    if (value > node.value) {
+      return this.getNode(value, node.right);
+    } else {
+      return this.getNode(value, node.left);
     }
   }
 }
