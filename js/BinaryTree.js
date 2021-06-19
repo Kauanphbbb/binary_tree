@@ -3,6 +3,7 @@ class Node {
     this.value = value;
     this.left = left;
     this.right = right;
+    this.parent = null;
   }
 }
 
@@ -35,6 +36,7 @@ class BinaryTree {
   insertNode(node, newNode) {
     if (node.value > newNode.value) {
       if (node.left === null) {
+        newNode.parent = node.value;
         node.left = newNode;
       } else {
         this.insertNode(node.left, newNode);
@@ -45,6 +47,7 @@ class BinaryTree {
 
     if (node.value < newNode.value) {
       if (node.right === null) {
+        newNode.parent = node.value;
         node.right = newNode;
       } else {
         this.insertNode(node.right, newNode);
@@ -98,6 +101,48 @@ class BinaryTree {
       return this.getNode(value, node.right);
     } else {
       return this.getNode(value, node.left);
+    }
+  }
+
+  remove(value) {
+    this.root = this.removeNode(this.root, value);
+  }
+
+  removeNode(node, value) {
+    if (node === null) {
+      return null;
+    } else if (value > node.value) {
+      node.right = this.removeNode(node.right, value);
+      return node;
+    } else {
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+
+      if (node.left === null) {
+        node = node.right;
+        return node;
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      const aux = this.findSmallerNode(node.right);
+
+      node.value = aux.value;
+
+      node.right = this.removeNode(node.right, aux.value);
+
+      return node;
+    }
+  }
+
+  findSmallerNode(node) {
+    if (node.left === null) {
+      return node;
+    } else {
+      return this.findSmallerNode(node.left);
     }
   }
 }
