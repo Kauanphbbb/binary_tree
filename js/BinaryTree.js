@@ -124,9 +124,11 @@ class BinaryTree {
       }
 
       if (node.left === null) {
+        node.right.parent = node.parent;
         node = node.right;
         return node;
       } else if (node.right === null) {
+        node.right.parent = node.parent;
         node = node.left;
         return node;
       }
@@ -134,7 +136,7 @@ class BinaryTree {
       const aux = this.findSmallerNode(node.right);
 
       node.value = aux.value;
-
+      node.left.parent = node.value;
       node.right = this.removeNode(node.right, aux.value);
 
       return node;
