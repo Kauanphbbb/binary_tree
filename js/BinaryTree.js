@@ -114,6 +114,9 @@ class BinaryTree {
     } else if (value > node.value) {
       node.right = this.removeNode(node.right, value);
       return node;
+    } else if (value < node.value) {
+      node.left = this.removeNode(node.left, value);
+      return node;
     } else {
       if (node.left === null && node.right === null) {
         node = null;
