@@ -19,6 +19,11 @@ function showInfoNode(node) {
             ? "ChildRight: " + nodeAttributes.right.value
             : ""
         }
+        ${
+          tree.getHeight(nodeAttributes)
+            ? "Height: " + tree.getHeight(nodeAttributes)
+            : ""
+        }
         `;
 }
 
