@@ -155,9 +155,9 @@ class BinaryTree {
     if (node === null) {
       return null;
     } else if (value < node.value) {
-      return this.pathNode(node.left, value);
+      return this.search(node.left, value);
     } else if (value > node.value) {
-      return this.pathNode(node.right, value);
+      return this.search(node.right, value);
     } else {
       return node;
     }
