@@ -4,23 +4,41 @@ body {
     font-size: 22px;
 }
 
-.new-node {
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.sidebar {
+    width: 300px;
     display: flex;
     flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+    display: flex;
+}
+
+.tree {
+    flex: 1 0 auto;
+}
+
+.info-node {
+    width: 200px;
 }
 
 .mermaid {
     display: none;
 }
 
-.btn-insert,
+.btn,
 .input-node {
     width: 250px;
     border-radius: 5px;
 }
 
-.btn-insert {
-    background-color: #008CBA;
+.btn {
     border: none;
     color: white;
     padding: 15px 32px;
@@ -29,10 +47,32 @@ body {
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
+    margin: 8px 0px;
+}
+
+.btn-insert {
+    background-color: #008CBA;
+}
+
+.btn-remove {
+    background-color: #f44336;
+}
+
+.btn-search {
+    background-color: #e7e7e7;
+    color: black;
 }
 
 .btn-insert:hover {
     background-color: #006f94;
+}
+
+.btn-remove:hover {
+    background-color: #af3128;
+}
+
+.btn-search:hover {
+    background-color: #adadad;
 }
 
 .input-node {
@@ -46,4 +86,12 @@ body {
 .msg-invalid-input {
     color: red;
     display: none;
+}
+
+.found-node g {
+    color: #fff;
+}
+
+.found-node rect {
+    fill: #006f94 !important;
 }

@@ -3,7 +3,7 @@ class Node {
     this.value = value;
     this.left = left;
     this.right = right;
-    this.parent = null;
+    this.parent = right;
   }
 }
 
@@ -106,6 +106,10 @@ class BinaryTree {
 
   remove(value) {
     this.root = this.removeNode(this.root, value);
+
+    if (this.root) {
+      this.quantityNodes--;
+    }
   }
 
   removeNode(node, value) {

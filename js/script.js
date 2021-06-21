@@ -1,39 +1,49 @@
 const tree = new BinaryTree();
 const btnInsertNode = document.querySelector("#btn-insert");
+const btnRemoveNode = document.querySelector("#btn-remove");
+const btnSearchNode = document.querySelector("#btn-search");
 const inputInsetNode = document.querySelector("#input-node");
 const displayMermaid = document.querySelector(".mermaid");
 const messageError = document.querySelector(".msg-invalid-input");
 const infoNode = document.querySelector("#info-node");
+const infoTree = document.querySelector("#info-tree");
 let nodes;
 let markdownTree;
 
+function showInfoTree() {
+  infoTree.innerText = `
+  Degree: ${tree.degree}
+  Height: ${tree.height}
+  Quantity Nodes: ${tree.quantityNodes}
+  `;
+}
+
 function showInfoNode(node) {
-  const nodeValue = parseInt(node.getAttribute("id"));
-  const nodeAttributes = tree.getNode(nodeValue);
+  if (document.querySelector(".found-node")) {
+    document.querySelector(".found-node").classList.remove("found-node");
+  }
+
+  const nodeElement = document.querySelector(`g[id="${node.value}"]`);
+
+  nodeElement.classList.add("found-node");
 
   infoNode.innerText = `
-        Value: ${nodeAttributes.value}
-        ${nodeAttributes.left ? "ChildLeft: " + nodeAttributes.left.value : ""}
-        ${
-          nodeAttributes.right
-            ? "ChildRight: " + nodeAttributes.right.value
-            : ""
-        }
-        ${
-          tree.getHeight(nodeAttributes)
-            ? "Height: " + tree.getHeight(nodeAttributes)
-            : ""
-        }
-        `;
+  Value: ${node.value}
+  ${node.left ? "ChildLeft: " + node.left.value : ""}
+  ${node.right ? "ChildRight: " + node.right.value : ""}
+  ${node.parent ? "Parent: " + node.parent : ""}
+  ${tree.getHeight(node) ? "Height: " + tree.getHeight(node) : ""}
+  `;
 }
 
 function insertNode() {
   const inputValues = inputInsetNode.value;
   messageError.style.display = "none";
+  infoNode.innerText = "";
 
   if (inputValues < 0) {
     const value = parseInt(inputValues);
-
+    inputInsetNode.value = "";
     tree.insert(value);
   } else if (/^[0-9]{1,}$/.test(inputValues)) {
     const value = parseInt(inputValues);
@@ -53,6 +63,55 @@ function insertNode() {
   if (tree.root !== null) {
     displayMermaid.style.display = "block";
     renderTree();
+  }
+}
+
+function removeNode() {
+  const inputValues = inputInsetNode.value;
+  messageError.style.display = "none";
+  infoNode.innerText = "";
+
+  if (inputValues < 0) {
+    const value = parseInt(inputValues);
+    inputInsetNode.value = "";
+    tree.remove(value);
+  } else if (/^[0-9]{1,}$/.test(inputValues)) {
+    const value = parseInt(inputValues);
+    inputInsetNode.value = "";
+    tree.remove(value);
+  } else {
+    inputInsetNode.focus();
+    messageError.style.display = "block";
+  }
+
+  if (tree.root === null) {
+    displayMermaid.style.display = "none";
+  } else {
+    renderTree();
+  }
+}
+
+function searchNode() {
+  const inputValues = inputInsetNode.value;
+  let node = null;
+  messageError.style.display = "none";
+  infoNode.innerText = "";
+
+  if (inputValues < 0) {
+    const value = parseInt(inputValues);
+    inputInsetNode.value = "";
+    node = tree.getNode(value);
+  } else if (/^[0-9]{1,}$/.test(inputValues)) {
+    const value = parseInt(inputValues);
+    inputInsetNode.value = "";
+    node = tree.getNode(value);
+  } else {
+    inputInsetNode.focus();
+    messageError.style.display = "block";
+  }
+
+  if (node) {
+    showInfoNode(node);
   }
 }
 
@@ -95,14 +154,22 @@ function renderTree() {
     nodes = document.querySelectorAll(".nodes .node");
 
     nodes.forEach((node) => {
-      node.addEventListener("click", () => showInfoNode(node));
+      node.addEventListener("click", () => {
+        const nodeValue = parseInt(node.getAttribute("id"));
+        const nodeAttributes = tree.getNode(nodeValue);
+        showInfoNode(nodeAttributes);
+      });
     });
+
+    showInfoTree();
   };
 
   mermaid.render("preparedScheme", code, insert);
 }
 
 btnInsertNode.addEventListener("click", () => insertNode());
+btnSearchNode.addEventListener("click", () => searchNode());
+btnRemoveNode.addEventListener("click", () => removeNode());
 inputInsetNode.addEventListener("keydown", (e) => {
   if (e.keyCode !== 13) return;
   insertNode();
