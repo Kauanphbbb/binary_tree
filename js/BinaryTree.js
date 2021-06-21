@@ -154,4 +154,29 @@ class BinaryTree {
       return this.findSmallerNode(node.left);
     }
   }
+
+  search(node, value) {
+    if (node === null) {
+      return null;
+    } else if (value < node.value) {
+      return this.search(node.left, value);
+    } else if (value > node.value) {
+      return this.search(node.right, value);
+    } else {
+      return node;
+    }
+  }
+
+  path(initValue, finalValue) {
+    return this.pathNode(this.root, initValue, finalValue);
+  }
+
+  pathNode(node, initValue, finalValue) {
+    const firstNode = this.search(node, initValue);
+    if (!firstNode) {
+      return null;
+    } else {
+      return this.search(firstNode, finalValue);
+    }
+  }
 }
